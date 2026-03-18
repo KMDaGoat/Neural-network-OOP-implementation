@@ -126,6 +126,7 @@ class neuralnetwork:
         tempparam = self.parameters.copy()
         tempgrads = self.grads.copy()
 
+        #turning the parameter dictionary into a vector 
         for layer in range( 1, self.layernum + 1):
             for values in ["W" , "b"]:
                 key = values + str(layer)
@@ -135,6 +136,7 @@ class neuralnetwork:
 
         self.thetaparam = np.concatenate(self.thetaparam)
 
+        #turning the grads dictionary into a vector 
         for layer in range(1 , self.layernum + 1):
             for values in ["dw" , "db"]:
                 key = values + str(layer)
@@ -143,8 +145,11 @@ class neuralnetwork:
                 self.keysgrad.extend([key] * vector.shape[0])
 
         self.thetagrad = np.concatenate(self.thetagrad)
+
+        #making a vector to hold all the cosrts returned later on
         self.approxgrad = np.zeros_like(self.thetaparam)
 
+        #gradient checking
         for i in range(len(self.thetaparam)):
             thetaplus = self.thetaparam.copy()
             thetaminus = self.thetaparam.copy()
